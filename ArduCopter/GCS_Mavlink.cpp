@@ -527,7 +527,8 @@ static const ap_message STREAM_EXTRA1_msgs[] = {
     MSG_ATTITUDE,
     MSG_SIMSTATE,
     MSG_AHRS2,
-    MSG_PID_TUNING // Up to four PID_TUNING messages are sent, depending on GCS_PID_MASK parameter
+    MSG_PID_TUNING, // Up to four PID_TUNING messages are sent, depending on GCS_PID_MASK parameter
+    MSG_YAW_TEST
 };
 static const ap_message STREAM_EXTRA2_msgs[] = {
     MSG_VFR_HUD
@@ -1118,6 +1119,21 @@ void GCS_MAVLINK_Copter::handleMessage(const mavlink_message_t &msg)
 
     switch (msg.msgid) {
 
+    case MAVLINK_MSG_ID_YAW_TEST:      // MAV ID: 12921
+    {
+        gcs().send_text(MAV_SEVERITY_INFO, "外部+++hahahahaha !!!");
+        mavlink_yaw_test_t yaw_test;
+        mavlink_msg_yaw_test_decode(&msg, &yaw_test);
+        char temp_char[10];  
+        snprintf(temp_char, sizeof(temp_char), "%f", yaw_test.yaw_c);
+        gcs().send_text(MAV_SEVERITY_INFO, "%s", temp_char);
+
+
+        // 接收到的消息存储到全局变量或类成员变量中
+        copter.mode_yaw_tracker.set_yaw_test_values(yaw_test.yaw_c, yaw_test.throttle_c);
+        break;
+    }
+
 #if MODE_GUIDED_ENABLED == ENABLED
     case MAVLINK_MSG_ID_SET_ATTITUDE_TARGET:   // MAV ID: 82
     {
@@ -1396,6 +1412,9 @@ void GCS_MAVLINK_Copter::handleMessage(const mavlink_message_t &msg)
         break;
     }
 #endif
+
+
+
 
     case MAVLINK_MSG_ID_RADIO:
     case MAVLINK_MSG_ID_RADIO_STATUS:       // MAV ID: 109

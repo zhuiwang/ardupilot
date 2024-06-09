@@ -39,6 +39,7 @@ public:
         AUTOROTATE =   26,  // Autonomous autorotation
         AUTO_RTL =     27,  // Auto RTL, this is not a true mode, AUTO will report as this mode if entered to perform a DO_LAND_START Landing sequence
         TURTLE =       28,  // Flip over after crash
+        Yaw_Tracker =  29,  // new flight mode
 
         // Mode number 127 reserved for the "drone show mode" in the Skybrush
         // fork at https://github.com/skybrush-io/ardupilot
@@ -824,6 +825,42 @@ protected:
 private:
 
     float get_throttle_assist(float velz, float pilot_throttle_scaled);
+
+};
+
+class ModeYaw_Tracker : public Mode {
+
+public:
+    // inherit constructor
+    using Mode::Mode;
+    Number mode_number() const override { return Number::Yaw_Tracker; }
+    float received_yaw_c;
+    int32_t received_throttle_c;
+    // 构造函数
+    ModeYaw_Tracker() : received_yaw_c(0.0f), received_throttle_c(0.0f) {}
+
+    void set_yaw_test_values(float yaw_c, float throttle_c) {
+        received_yaw_c = yaw_c;
+        received_throttle_c = throttle_c;
+    }
+
+    bool init(bool ignore_checks) override;
+    void run() override;
+
+    bool requires_GPS() const override { return true; }
+    bool has_manual_throttle() const override { return false; }
+    bool allows_arming(AP_Arming::Method method) const override { return true; };
+    bool is_autopilot() const override { return false; }
+    
+
+protected:
+
+    const char *name() const override { return "Yaw_Tracker"; }
+    const char *name4() const override { return "Yaw_Track"; }
+
+private:
+
+    float get_throttle_assist(float velz, float pilot_throttle_scaled); //是否需要删除
 
 };
 

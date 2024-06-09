@@ -187,6 +187,12 @@
 #endif
 
 //////////////////////////////////////////////////////////////////////////////
+// Yaw_Tracker - 高度不变跟踪偏航角接受油门信号启停
+#ifndef MODE_YawTracker_ENABLED
+# define MODE_YawTracker_ENABLED ENABLED
+#endif
+
+//////////////////////////////////////////////////////////////////////////////
 // flip - fly vehicle in flip in pitch and roll direction mode
 #ifndef MODE_FLIP_ENABLED
 # define MODE_FLIP_ENABLED ENABLED

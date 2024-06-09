@@ -225,6 +225,7 @@ public:
     friend class ModeZigZag;
     friend class ModeAutorotate;
     friend class ModeTurtle;
+    friend class ModeYaw_Tracker;
 
     Copter(void);
 
@@ -968,6 +969,9 @@ private:
 #endif
 #if MODE_DRIFT_ENABLED == ENABLED
     ModeDrift mode_drift;
+#endif
+#if MODE_YawTracker_ENABLED == ENABLED
+    ModeYaw_Tracker mode_yaw_tracker;
 #endif
 #if MODE_FLIP_ENABLED == ENABLED
     ModeFlip mode_flip;

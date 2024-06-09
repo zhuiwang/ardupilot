@@ -85,6 +85,12 @@ Mode *Copter::mode_from_mode_num(const Mode::Number mode)
             break;
 #endif
 
+#if MODE_YawTracker_ENABLED == ENABLED
+        case Mode::Number::Yaw_Tracker:
+            ret = &mode_yaw_tracker;
+            break;
+#endif
+
 #if MODE_SPORT_ENABLED == ENABLED
         case Mode::Number::SPORT:
             ret = &mode_sport;

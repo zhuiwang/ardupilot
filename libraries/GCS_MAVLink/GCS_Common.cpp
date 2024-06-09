@@ -189,6 +189,13 @@ bool GCS_MAVLINK::init(uint8_t instance)
     return true;
 }
 
+// 发送自定义信息数据
+// void GCS_MAVLINK::send_yaw_test(void)
+// {
+//     //该函数自动生成，包含四个变量    
+//     mavlink_msg_yaw_test_send(chan, 0x0a,0x0b);
+// }
+
 void GCS_MAVLINK::send_meminfo(void)
 {
     unsigned __brkval = 0;
@@ -894,6 +901,7 @@ ap_message GCS_MAVLINK::mavlink_id_to_ap_message_id(const uint32_t mavlink_id) c
         uint32_t mavlink_id;
         ap_message msg_id;
     } map[] {
+        { MAVLINK_MSG_ID_YAW_TEST,              MSG_YAW_TEST},//自定义的mavlin
         { MAVLINK_MSG_ID_HEARTBEAT,             MSG_HEARTBEAT},
         { MAVLINK_MSG_ID_ATTITUDE,              MSG_ATTITUDE},
         { MAVLINK_MSG_ID_ATTITUDE_QUATERNION,   MSG_ATTITUDE_QUATERNION},

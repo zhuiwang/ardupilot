@@ -22,6 +22,11 @@ board to be used (default is `sitl`).
 There are several commands in the build system for advanced usages, but here we
 list some basic and more used commands as example.
 
+
+AOIpilot
+    ./waf configure --board AOIpilot
+    ./waf copter
+
 * **Build ArduCopter**
 
     Below shows how to build ArduCopter for the Pixhawk2/Cube. Many other boards are

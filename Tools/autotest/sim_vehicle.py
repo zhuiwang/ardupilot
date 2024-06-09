@@ -11,6 +11,9 @@ AP_FLAKE8_CLEAN
 """
 from __future__ import print_function
 
+import matplotlib
+matplotlib.use('Agg')
+
 import atexit
 import datetime
 import errno
